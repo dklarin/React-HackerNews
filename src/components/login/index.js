@@ -2,6 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 
 import { gql, withAuth } from "@8base/react-sdk";
+//import LogoutButton from "./logout";
 
 const USER_INFO = gql`
   query UserQuery {
