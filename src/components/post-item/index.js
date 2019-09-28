@@ -1,11 +1,41 @@
+import gql from "graphql-tag";
 import React from "react";
+import { Mutation } from "react-apollo";
 import distanceInWords from "date-fns/formatDistance";
+import "./index.css";
+
+const VOTE_MUTATION = gql`
+  mutation PostUpdate($data: PostUpdateInput!) {
+    postUpdate(data: $data) {
+      id
+    }
+  }
+`;
 
 const PostItem = ({ post, refetch }) => {
+  const upVotePost = async (vote, post) => {
+    const data = {
+      variables: {
+        data: {
+          id: post.id,
+          url: post.url,
+          description: post.description,
+          votes: post.votes + 1,
+        },
+      },
+    };
+    await vote(data);
+    refetch();
+  };
+
   return (
     <article className="post">
       <section className="upvote">
-        <button>1</button>
+        <Mutation mutation={VOTE_MUTATION}>
+          {postUpdate => (
+            <button onClick={e => upVotePost(postUpdate, post)}>1</button>
+          )}
+        </Mutation>
       </section>
       <section className="body">
         <div className="title">
