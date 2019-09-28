@@ -1,7 +1,8 @@
 import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
-import distanceInWords from "date-fns/formatDistance";
+//import distanceInWords from "date-fns/formatDistance";
+import distanceInWords from "date-fns/distance_in_words_to_now";
 import "./index.css";
 
 const VOTE_MUTATION = gql`
@@ -46,9 +47,10 @@ const PostItem = ({ post, refetch }) => {
             {post.votes} vote{post.votes > 1 ? "s" : ""}
           </span>
 
-          <span>
+          {/* <span>
             {distanceInWords(new Date(post.createdAt), new Date())} ago
-          </span>
+         </span>*/}
+          <span>{distanceInWords(post.createdAt)} ago</span>
         </div>
       </section>
     </article>
